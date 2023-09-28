@@ -34,7 +34,7 @@ class AuthenticationController extends Controller
         $validator = Validator::make($request->all(), [
             "name" => 'required|min:5',
             "email" => 'required|email|unique:users,email',
-            "phone_number"=>'required|size:11|unique:users,phone_number',
+            "phone_number"=>'required|size:10|unique:users,phone_number',
             "password" => 'bail|required|confirmed|min:8',
         ], $customMessages);
 
