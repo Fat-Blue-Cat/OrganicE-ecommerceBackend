@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->numericMorphs('phone_number');
+            $table->string('phone_number');
             $table->string('avata')->default('https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg');
             $table->rememberToken();
             $table->timestamps();
