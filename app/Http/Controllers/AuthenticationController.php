@@ -21,6 +21,9 @@ class AuthenticationController extends Controller
         $customMessages = [
             'name.required' => 'Tên là trường bắt buộc.',
             'name.min' => 'Tên phải có ít nhất 5 ký tự.',
+            'phone_number.required'=>'Số điện thoại là trường bắt buộc.',
+            'phone_number.size'=>'Số điện thoại đủ 11 số.',
+            'phone_number.unique'=>"Số điện thoại đã được đăng ký",
             'email.required' => 'Email là trường bắt buộc.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại trong hệ thống.',
@@ -31,7 +34,8 @@ class AuthenticationController extends Controller
         $validator = Validator::make($request->all(), [
             "name" => 'required|min:5',
             "email" => 'required|email|unique:users,email',
-            "password" => 'required|confirmed|min:8',
+            "phone_number"=>'required|size:11|unique:users,phone_number',
+            "password" => 'bail|required|confirmed|min:8',
         ], $customMessages);
 
         if ($validator->fails()) {
@@ -50,7 +54,6 @@ class AuthenticationController extends Controller
             $user->token = $token;
             return response()->json([
                 'message' => 'Đăng ký thành công',
-
                 'token' => $token
             ], 200);
         }
@@ -98,7 +101,7 @@ class AuthenticationController extends Controller
                 ], 200);
             }
             else{
-                return response()->json(["errors" => "Tài khoán hoặc mật khẩu éo chính xác"], 200);
+                return response()->json(["errors" => "Tài khoản hoặc mật khẩu éo chính xác"], 200);
             }
         }
     }
